@@ -1,8 +1,10 @@
+var fs = require('fs');
 var outputDir = './data';
+var date = new Date();
 
 // responsible for outputting the error log file
 function logError(error){
-  var outputStr = '';
+  console.log('There was an error, check the log for more details.');
 
   var weekdays = [
     'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
@@ -16,10 +18,9 @@ function logError(error){
     outputStr += key + ': ' + error[key] + '\n';
   }
 
-  outputStr = [weekdays[date.getDay()], months[date.getMonth()], date.getDate().toString(), date.getYear().toString(), date.toLocaleTimeString()].join(' ') + '\n' + outputStr;
+  var outputStr = [weekdays[date.getDay()], months[date.getMonth()], date.getDate().toString(), date.getYear().toString(), date.toLocaleTimeString()].join(' ') + '\n' + outputStr;
 
   fs.writeFileSync('./scraper-error.log', outputStr);
-  return console.log('There was an error, check the log for more details.');
 }
 
 function leadingZero(integer){
@@ -29,5 +30,6 @@ function leadingZero(integer){
 module.exports = {
   outputDir: outputDir,
   logError: logError,
-  leadingZero: leadingZero
+  leadingZero: leadingZero,
+  date: date
 };
